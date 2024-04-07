@@ -70,7 +70,7 @@ def compute_correlation_and_pvalue(data, icv_column, mean_weighted_corr):
     # p-value for weighted mean
     tmp = np.asarray(correlation_weighted_average)
     idx = np.where((tmp > mean_weighted_corr.correlation) if mean_weighted_corr.correlation > 0 else (tmp < mean_weighted_corr.correlation))[0]
-    p_value_M = len(idx) / 1000
+    p_value_M = len(idx) / data.shape[1]
    
     ## Generate the plot with correlation of the null distribution and the mean correlation
     ax, fig = plt.subplots(figsize=(7, 5))
