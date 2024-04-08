@@ -71,11 +71,6 @@ def compute_correlation_and_pvalue(data, icv_column, mean_weighted_corr):
     tmp = np.asarray(correlation_weighted_average)
     idx = np.where((tmp > mean_weighted_corr.correlation) if mean_weighted_corr.correlation > 0 else (tmp < mean_weighted_corr.correlation))[0]
     p_value_M = len(idx) / data.shape[1]
-   
-    ## Generate the plot with correlation of the null distribution and the mean correlation
-    ax, fig = plt.subplots(figsize=(7, 5))
-    sns.histplot(correlation_weighted_average, kde=True, color='blue', bins=30, ax=ax)
-    ax.axvline(x=mean_weighted_corr.correlation, color='red', linestyle='dashed', linewidth=2)
 
     return mean_weighted_corr.correlation, p_value_M, tmp
 
