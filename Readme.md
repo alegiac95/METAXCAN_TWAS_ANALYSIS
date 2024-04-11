@@ -16,7 +16,7 @@ The main sorces of data for the project are:
 
 GWAS data for all of the disorders were analysed with the same exact pipeline, using PrediXcan adn MultiXcan, using as prediction models all of the elastic net models from the brain, excluding the brainstem (all sampling regions are shown in figure below).
 
-[Sampling sites of the GTEx material used for the prediction models](./figures/sampling_GTEx.png)
+![Sampling sites of the GTEx material used for the prediction models](./figures/sampling_GTEx.png)
 
 ### Results & Plots
 
