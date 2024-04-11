@@ -23,7 +23,7 @@ GWAS data for all of the disorders were analysed with the same exact pipeline, u
 
 Genes resulting from the TWAS analysis from PrediXcan and MultiXcan were used to calculate transcriptomic polygenic risk scores (TPRS) using a strategy similar to that done [here](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-021-02591-w). This score is calculated as:
 
-<center>$`TPRS = \sum^{N} w_{i}*G_{i}`$ </center>
+<center> $`TPRS = \sum^{N} w_{i}*G_{i}`$ </center>
 
 where $G_{i}$ represents the AHBA expression data for gene $i$, $w_{i}$ is the weight used to weight the gene corresponding to the signed $Z_{score}$ obtained from TWAS and $N$ is the number of genes used for the estimation of the score.
 
