@@ -18,6 +18,13 @@ GWAS data for all of the disorders were analysed with the same exact pipeline, u
 
 ![Sampling sites of the GTEx material used for the prediction models](./figures/sampling_GTEx.png)
 
+Genes resulting from the TWAS analysis from PrediXcan and MultiXcan were used to calculate transcriptomic polygenic risk scores (TPRS) using a strategy similar to that done [here](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-021-02591-w). This score is calculated as:
+$$ TPRS = \sum^{N}_{i=1} w_{i}*G_{i} $$
+
+where $G_{i}$ represents the AHBA expression data for gene $i$, $w_{i}$ is the weight used to weight the gene corresponding to the signed $Z_{score}$ obtained from TWAS and $N$ is the number of genes used for the estimation of the score.
+
+To select the number of genes $N$, we adopted a top-gene approach, in which we select the top genes that exceed a threshold of the $p_{value}$-ordered genes. As is done in traditional Poligenic Risk Scores (PRS), we selected an aray of tresholds, to assess the best threshold. In particular, we selected the top $10$, $5$, $1$, $0.5$ and $0.1\%$ of the genes.
+
 ### Results & Plots
 
 #### ADHD
