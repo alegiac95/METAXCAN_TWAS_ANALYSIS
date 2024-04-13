@@ -31,32 +31,50 @@ To select the number of genes $N$, we adopted a top-gene approach, in which we s
 
 TPRS scores were calculated for all regions of the Desikan-Killiany atlas, and correlated used spatial permutations models with ENIGMA summary statistics.
 
+All the afterformentioned steps were repeated for all of the disorders investigated, which are Attention Deficit and Hyperactivity Disorder (ADHD), Anorexia (AN), Autism Spectrum Disorder (ASD), Bipolar Disorder (BD), Major Depressive Disorder (MDD), Obsessive Compulsive Disorder (OCD) and Schizophrenia (SCZ).
+
 ## Results & Plots
 
 ### ADHD
+
+![ADHD TWAS Genes](./figures/adhd_twas.png)
 
 ![Enigma meta-analysis cohen's D and TPRS of TWAS genes at different thresholds](./figures/ADHD_brains.png)
 
 ### ASD
 
+![ASD TWAS Genes](./figures/asd_twas.png)
+
 ![Enigma meta-analysis cohen's D and TPRS of TWAS genes at different thresholds](./figures/ASD_brains.png)
 
 ### AN
+
+![AN TWAS Genes](./figures/an_twas.png)
 
 ![Enigma meta-analysis cohen's D and TPRS of TWAS genes at different thresholds](./figures/AN_brains.png)
 
 ### BD
 
+![BD TWAS Genes](./figures/bd_twas.png)
+
 ![Enigma meta-analysis cohen's D and TPRS of TWAS genes at different thresholds](./figures/BD_brains.png)
 
 ### MDD
+
+![MDD TWAS Genes](./figures/mdd_twas.png)
 
 ![Enigma meta-analysis cohen's D and TPRS of TWAS genes at different thresholds](./figures/MDD_brains.png)
 
 ### OCD
 
+![OCD TWAS Genes](./figures/ocd_twas.png)
+
 ![Enigma meta-analysis cohen's D and TPRS of TWAS genes at different thresholds](./figures/OCD_brains.png)
 
 ### SCZ
 
+![SCZ TWAS Genes](./figures/scz_twas.png)
+
 ![Enigma meta-analysis cohen's D and TPRS of TWAS genes at different thresholds](./figures/SCZ_brains.png)
+
+#### References
