@@ -1,3 +1,4 @@
 data/GWAS/
 data/models/
 **/.DS_Store
+code/__pycache__/
