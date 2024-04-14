@@ -41,6 +41,7 @@ All the afterformentioned steps were repeated for all of the disorders investiga
     <img src="./figures/adhd_twas.png" alt="ADHD TWAS" />
     <figcaption>Volcano plot showing the genes derived from TWAS from the GWAS summary statistics and GTEx derived tissue prediction models. Colored points show the genes in the top 10% of genes subsequently used for TPRS calculations. Labelled data points show the top 0.5% of the genes emerging from TWAS analysis.</figcaption>
 </figure>
+
 ![Enigma meta-analysis cohen's D and TPRS of TWAS genes at different thresholds](./figures/ADHD_brains.png)
 
 ### ASD
