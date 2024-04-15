@@ -39,44 +39,62 @@ All the afterformentioned steps were repeated for all of the disorders investiga
 
 <figure>
     <img src="./figures/adhd_twas.png" alt="ADHD TWAS" />
-    <figcaption>Volcano plot showing the genes derived from TWAS from the GWAS summary statistics and GTEx derived tissue prediction models. Colored points show the genes in the top 10% of genes subsequently used for TPRS calculations. Labelled data points show the top 0.5% of the genes emerging from TWAS analysis.</figcaption>
+    <figcaption> Volcano plot showing the genes derived from TWAS from the GWAS summary statistics and GTEx derived tissue prediction models. Colored points show the genes in the top 10% of genes subsequently used for TPRS calculations. Labelled data points show the top 0.5% of the genes emerging from TWAS analysis.</figcaption>
 </figure>
 
 ![Enigma meta-analysis cohen's D and TPRS of TWAS genes at different thresholds](./figures/ADHD_brains.png)
 
 ### ASD
 
-![ASD TWAS Genes](./figures/asd_twas.png)
+<figure>
+    <img src="./figures/asd_twas.png" alt="ASD TWAS" />
+    <figcaption> Volcano plot showing the genes derived from TWAS from the GWAS summary statistics and GTEx derived tissue prediction models. Colored points show the genes in the top 10% of genes subsequently used for TPRS calculations. Labelled data points show the top 0.5% of the genes emerging from TWAS analysis.</figcaption>
+</figure>
 
 ![Enigma meta-analysis cohen's D and TPRS of TWAS genes at different thresholds](./figures/ASD_brains.png)
 
 ### AN
 
-![AN TWAS Genes](./figures/an_twas.png)
+<figure>
+    <img src="./figures/an_twas.png" alt="AN TWAS" />
+    <figcaption> Volcano plot showing the genes derived from TWAS from the GWAS summary statistics and GTEx derived tissue prediction models. Colored points show the genes in the top 10% of genes subsequently used for TPRS calculations. Labelled data points show the top 0.5% of the genes emerging from TWAS analysis.</figcaption>
+</figure>
 
 ![Enigma meta-analysis cohen's D and TPRS of TWAS genes at different thresholds](./figures/AN_brains.png)
 
 ### BD
 
-![BD TWAS Genes](./figures/bd_twas.png)
+<figure>
+    <img src="./figures/bd_twas.png" alt="BD TWAS" />
+    <figcaption> Volcano plot showing the genes derived from TWAS from the GWAS summary statistics and GTEx derived tissue prediction models. Colored points show the genes in the top 10% of genes subsequently used for TPRS calculations. Labelled data points show the top 0.5% of the genes emerging from TWAS analysis.</figcaption>
+</figure>
 
 ![Enigma meta-analysis cohen's D and TPRS of TWAS genes at different thresholds](./figures/BD_brains.png)
 
 ### MDD
 
-![MDD TWAS Genes](./figures/mdd_twas.png)
+<figure>
+    <img src="./figures/mdd_twas.png" alt="MDD TWAS" />
+    <figcaption> Volcano plot showing the genes derived from TWAS from the GWAS summary statistics and GTEx derived tissue prediction models. Colored points show the genes in the top 10% of genes subsequently used for TPRS calculations. Labelled data points show the top 0.5% of the genes emerging from TWAS analysis.</figcaption>
+</figure>
 
 ![Enigma meta-analysis cohen's D and TPRS of TWAS genes at different thresholds](./figures/MDD_brains.png)
 
 ### OCD
 
-![OCD TWAS Genes](./figures/ocd_twas.png)
+<figure>
+    <img src="./figures/ocd_twas.png" alt="OCD TWAS" />
+    <figcaption> Volcano plot showing the genes derived from TWAS from the GWAS summary statistics and GTEx derived tissue prediction models. Colored points show the genes in the top 10% of genes subsequently used for TPRS calculations. Labelled data points show the top 0.5% of the genes emerging from TWAS analysis.</figcaption>
+</figure>
 
 ![Enigma meta-analysis cohen's D and TPRS of TWAS genes at different thresholds](./figures/OCD_brains.png)
 
 ### SCZ
 
-![SCZ TWAS Genes](./figures/scz_twas.png)
+<figure>
+    <img src="./figures/scz_twas.png" alt="SCZ TWAS" />
+    <figcaption> Volcano plot showing the genes derived from TWAS from the GWAS summary statistics and GTEx derived tissue prediction models. Colored points show the genes in the top 10% of genes subsequently used for TPRS calculations. Labelled data points show the top 0.5% of the genes emerging from TWAS analysis.</figcaption>
+</figure>
 
 ![Enigma meta-analysis cohen's D and TPRS of TWAS genes at different thresholds](./figures/SCZ_brains.png)
 
