@@ -13,7 +13,7 @@ theme_set(theme_light()
 twas_path <- "/Users/alessiogiacomel/Dropbox/PhD/Analysis/transcriptomics_gio/MetaXcan_TWAS_Analysis/results/"
 ahba_data <- readr::read_csv("/Users/alessiogiacomel/Library/CloudStorage/Dropbox/PhD/Analysis/transcriptomics_gio/MetaXcan_TWAS_Analysis/data/AHBA/AHBA_data_no_norm.csv") # data from the allen human brain atlas
 ahpa_data <- readr::read_tsv("/Users/alessiogiacomel/Library/CloudStorage/Dropbox/PhD/Analysis/transcriptomics_gio/MetaXcan_TWAS_Analysis/data/AHBA/AHPA_mrna_brain.tsv") # data from the allen human protein atlas
-
+figures_path <- "/Users/alessiogiacomel/Dropbox/PhD/Analysis/transcriptomics_gio/MetaXcan_TWAS_Analysis/figures/"
 
 
 # Find intersection of the two datasets in the gene names
@@ -36,14 +36,21 @@ adhd_twas |>
   ggplot(aes(x=z_mean, y=log10)) +
   geom_vline(xintercept = 0, linetype = 'dashed', color = "grey50", alpha = .5) +
   geom_hline(yintercept = 1.364, color = "#440154FF", linetype = 'dashed') +
-  geom_point(alpha = .7, color = "grey") +
-  geom_point(data = adhd_10, aes(x = z_mean, y = -log10(pvalue), color = -log10(pvalue))) +
-  scale_color_viridis_c(option="H") +
+  geom_point(alpha = .7, color = "grey", size =2) +
+  geom_point(data = adhd_10, aes(x = z_mean, y = -log10(pvalue), color = -log10(pvalue)), size =3) +
+  scale_color_viridis_c(name = "Top Genes",option="H", 
+                        breaks = c(min(-log10(adhd_10$pvalue)), 
+                                   max(-log10(adhd_10$pvalue))),
+                        labels = c("10%", "0.1%"),
+                        guide = guide_colorbar(position = "right",
+    theme = theme(legend.ticks = element_blank(),
+                  legend.title = element_blank(),
+                  legend.text = element_text(size = 12)))) +
   geom_text_repel(data = adhd_05, 
-                  aes(x  =z_mean, 
+                  aes(x  = z_mean, 
                       y = -log10(pvalue), 
                       label = gene_name),
-                  box.padding = .6, direction = "y") +
+                  box.padding = .6, direction = "b") +
   annotate("text", x = 3.5, y = yint + 0.1, label = "Top 10%", 
            hjust = -0.1, vjust = 0, color = "#440154FF", size = 5, fontface = "bold") +
   xlim(-4.9, 5.1) +
@@ -51,6 +58,7 @@ adhd_twas |>
   ylab(expression(-log[10](p[value]))) +
   ggtitle("ADHD TWAS Genes")
 
+ggsave(paste0(figures_path,"adhd_twas.png"), width = 7, height = 6, device = "png", dpi = "retina")
 
 asd_twas <- readr::read_tsv(paste0(twas_path,"ASD/PGC_ASD_SMetaXcan_en.tsv")) |>
   dplyr::filter(gene_name %in% common_genes) |>
@@ -66,20 +74,29 @@ asd_twas |>
   ggplot(aes(x=z_mean, y=log10)) +
   geom_vline(xintercept = 0, linetype = 'dashed', color = "grey50", alpha = .5) +
   geom_hline(yintercept = yint, color = "#440154FF", linetype = 'dashed') +
-  geom_point(alpha = .7, color = "grey") +
-  geom_point(data = asd_10, aes(x = z_mean, y = -log10(pvalue), color = -log10(pvalue))) +
-  scale_color_viridis_c(option="H") +
+  geom_point(alpha = .7, color = "grey", size = 2) +
+  geom_point(data = asd_10, aes(x = z_mean, y = -log10(pvalue), color = -log10(pvalue)), size = 3) +
+  scale_color_viridis_c(name = "Top Genes",option="H", 
+                        breaks = c(min(-log10(asd_10$pvalue)), 
+                                   max(-log10(asd_10$pvalue))),
+                        labels = c("10%", "0.1%"),
+                        guide = guide_colorbar(position = "right",
+                                               theme = theme(legend.ticks = element_blank(),
+                                                             legend.title = element_blank(),
+                                                             legend.text = element_text(size = 12)))) +
   geom_text_repel(data = asd_05, 
                   aes(x  =z_mean, 
                       y = -log10(pvalue), 
                       label = gene_name),
-                  box.padding = .6, direction = "y") +
+                  box.padding = .6, direction = "b", max.overlaps = 20) +
   annotate("text", x = 3.5, y = yint + 0.1, label = "Top 10%", 
            hjust = -0.1, vjust = 0, color = "#440154FF", size = 5, fontface = "bold") +
-  xlim(-4.9, 5.1) +
+  xlim(-6, 6) +
   xlab("Z score") +
   ylab(expression(-log[10](p[value]))) +
   ggtitle("ASD TWAS Genes")
+
+ggsave(paste0(figures_path,"asd_twas.png"), width = 7, height = 6, device = "png", dpi = "retina")
 
 an_twas <- readr::read_tsv(paste0(twas_path,"AN/PGC_AN_SMetaXcan_en.tsv")) |>
   dplyr::filter(gene_name %in% common_genes) |>
@@ -94,9 +111,16 @@ an_twas |>
   ggplot(aes(x=z_mean, y=log10)) +
   geom_vline(xintercept = 0, linetype = 'dashed', color = "grey50", alpha = .5) +
   geom_hline(yintercept = yint, color = "#440154FF", linetype = 'dashed') +
-  geom_point(alpha = .7, color = "grey") +
-  geom_point(data = an_10, aes(x = z_mean, y = -log10(pvalue), color = -log10(pvalue))) +
-  scale_color_viridis_c(option="H") +
+  geom_point(alpha = .7, color = "grey", size = 2) +
+  geom_point(data = an_10, aes(x = z_mean, y = -log10(pvalue), color = -log10(pvalue)), size = 3) +
+  scale_color_viridis_c(name = "Top Genes",option="H", 
+                        breaks = c(min(-log10(an_10$pvalue)), 
+                                   max(-log10(an_10$pvalue))),
+                        labels = c("Top 10%", "Top 0.1%"),
+                        guide = guide_colorbar(position = "right",
+                                               theme = theme(legend.ticks = element_blank(),
+                                                             legend.title = element_blank(),
+                                                             legend.text = element_text(size = 12)))) +
   geom_text_repel(data = an_05, 
                   aes(x  =z_mean, 
                       y = -log10(pvalue), 
@@ -108,6 +132,9 @@ an_twas |>
   xlab("Z score") +
   ylab(expression(-log[10](p[value]))) +
   ggtitle("AN TWAS Genes")
+
+ggsave(paste0(figures_path,"an_twas.png"), width = 7, height = 6, device = "png", dpi = "retina")
+
 
 bd_twas <- readr::read_tsv(paste0(twas_path,"BD/PGC_BD_SMetaXcan_en.tsv")) |>
   dplyr::filter(gene_name %in% common_genes) |> 
@@ -122,20 +149,30 @@ bd_twas |>
   ggplot(aes(x=z_mean, y=log10)) +
   geom_vline(xintercept = 0, linetype = 'dashed', color = "grey50", alpha = .5) +
   geom_hline(yintercept = yint, color = "#440154FF", linetype = 'dashed') +
-  geom_point(alpha = .7, color = "grey") +
-  geom_point(data = bd_10, aes(x = z_mean, y = -log10(pvalue), color = -log10(pvalue))) +
-  scale_color_viridis_c(option="H") +
+  geom_point(alpha = .7, color = "grey", size =2) +
+  geom_point(data = bd_10, aes(x = z_mean, y = -log10(pvalue), color = -log10(pvalue)), size = 3) +
+  scale_color_viridis_c(name = "Top Genes",option="H", 
+                        breaks = c(min(-log10(bd_10$pvalue)), 
+                                   max(-log10(bd_10$pvalue))),
+                        labels = c("10%", "0.1%"),
+                        guide = guide_colorbar(position = "right",
+                                               theme = theme(legend.ticks = element_blank(),
+                                                             legend.title = element_blank(),
+                                                             legend.text = element_text(size = 12)))) +
   geom_text_repel(data = bd_05, 
                   aes(x  =z_mean, 
                       y = -log10(pvalue), 
                       label = gene_name),
-                  box.padding = .6, direction = "y") +
+                  box.padding = .6, direction = "b", max.overlaps = 20) +
   annotate("text", x = 3.5, y = 1.45, label = "Top 10%", 
            hjust = -0.1, vjust = 0, color = "#440154FF", size = 5, fontface = "bold") +
   xlim(-6, 6) +
   xlab("Z score") +
   ylab(expression(-log[10](p[value]))) +
   ggtitle("ASD TWAS Genes")
+
+ggsave(paste0(figures_path,"bd_twas.png"), width = 7, height = 6, device = "png", dpi = "retina")
+
 
 mdd_twas <- readr::read_tsv(paste0(twas_path,"MDD/PGC_MDD_SMetaXcan_en.tsv")) |>
   dplyr::filter(gene_name %in% common_genes) |>
@@ -150,20 +187,30 @@ mdd_twas |>
   ggplot(aes(x=z_mean, y=log10)) +
   geom_vline(xintercept = 0, linetype = 'dashed', color = "grey50", alpha = .5) +
   geom_hline(yintercept = yint, color = "#440154FF", linetype = 'dashed') +
-  geom_point(alpha = .7, color = "grey") +
-  geom_point(data = mdd_10, aes(x = z_mean, y = -log10(pvalue), color = -log10(pvalue))) +
-  scale_color_viridis_c(option="H") +
+  geom_point(alpha = .7, color = "grey", size =2) +
+  geom_point(data = mdd_10, aes(x = z_mean, y = -log10(pvalue), color = -log10(pvalue)), size = 3) +
+  scale_color_viridis_c(name = "Top Genes",option="H", 
+                        breaks = c(min(-log10(mdd_10$pvalue)), 
+                                   max(-log10(mdd_10$pvalue))),
+                        labels = c("10%", "0.1%"),
+                        guide = guide_colorbar(position = "right",
+                                               theme = theme(legend.ticks = element_blank(),
+                                                             legend.title = element_blank(),
+                                                             legend.text = element_text(size = 12)))) +
   geom_text_repel(data = mdd_05, 
                   aes(x  =z_mean, 
                       y = -log10(pvalue), 
                       label = gene_name),
-                  box.padding = .6, direction = "b") +
+                  box.padding = .6, direction = "b", max.overlaps = 20) +
   annotate("text", x = 3.5, y = yint + 0.1, label = "Top 10%", 
            hjust = -0.1, vjust = 0, color = "#440154FF", size = 5, fontface = "bold") +
   xlim(-6, 6) +
   xlab("Z score") +
   ylab(expression(-log[10](p[value]))) +
   ggtitle("MDD TWAS Genes")
+
+ggsave(paste0(figures_path,"mdd_twas.png"), width = 7, height = 6, device = "png", dpi = "retina")
+
 
 ocd_twas <- readr::read_tsv(paste0(twas_path,"OCD/PGC_OCD_SMetaXcan_en.tsv")) |>
   dplyr::filter(gene_name %in% common_genes) |>
@@ -178,20 +225,29 @@ ocd_twas |>
   ggplot(aes(x=z_mean, y=log10)) +
   geom_vline(xintercept = 0, linetype = 'dashed', color = "grey50", alpha = .5) +
   geom_hline(yintercept = yint, color = "#440154FF", linetype = 'dashed') +
-  geom_point(alpha = .7, color = "grey") +
-  geom_point(data = ocd_10, aes(x = z_mean, y = -log10(pvalue), color = -log10(pvalue))) +
-  scale_color_viridis_c(option="H") +
+  geom_point(alpha = .7, color = "grey", size = 2) +
+  geom_point(data = ocd_10, aes(x = z_mean, y = -log10(pvalue), color = -log10(pvalue)), size = 3) +
+  scale_color_viridis_c(name = "Top Genes",option="H", 
+                        breaks = c(min(-log10(ocd_10$pvalue)), 
+                                   max(-log10(ocd_10$pvalue))),
+                        labels = c("10%", "0.1%"),
+                        guide = guide_colorbar(position = "right",
+                                               theme = theme(legend.ticks = element_blank(),
+                                                             legend.title = element_blank(),
+                                                             legend.text = element_text(size = 12)))) +
   geom_text_repel(data = ocd_05, 
                   aes(x  =z_mean, 
                       y = -log10(pvalue), 
                       label = gene_name),
-                  box.padding = .6, direction = "b") +
+                  box.padding = .6, direction = "b", max.overlaps = 20) +
   annotate("text", x = 3.5, y = 1.45, label = "Top 10%", 
            hjust = -0.1, vjust = 0, color = "#440154FF", size = 5, fontface = "bold") +
   xlim(-6, 6) +
   xlab("Z score") +
   ylab(expression(-log[10](p[value]))) +
   ggtitle("OCD TWAS Genes")
+
+ggsave(paste0(figures_path,"ocd_twas.png"), width = 7, height = 6, device = "png", dpi = "retina")
 
 scz_twas <- readr::read_tsv(paste0(twas_path,"SCZ/PGC_SCZ_SMetaXcan_en.tsv")) |>
   dplyr::filter(gene_name %in% common_genes) |>
@@ -206,18 +262,26 @@ scz_twas |>
   ggplot(aes(x=z_mean, y=log10)) +
   geom_vline(xintercept = 0, linetype = 'dashed', color = "grey50", alpha = .5) +
   geom_hline(yintercept = yint, color = "#440154FF", linetype = 'dashed') +
-  geom_point(alpha = .7, color = "grey") +
-  geom_point(data = scz_10, aes(x = z_mean, y = -log10(pvalue), color = -log10(pvalue))) +
-  scale_color_viridis_c(option="H") +
+  geom_point(alpha = .7, color = "grey", size =2) +
+  geom_point(data = scz_10, aes(x = z_mean, y = -log10(pvalue), color = -log10(pvalue)), size =3) +
+  scale_color_viridis_c(name = "Top Genes",option="H", 
+                        breaks = c(min(-log10(scz_10$pvalue)), 
+                                   max(-log10(scz_10$pvalue))),
+                        labels = c("10%", "0.1%"),
+                        guide = guide_colorbar(position = "right",
+                                               theme = theme(legend.ticks = element_blank(),
+                                                             legend.text = element_text(size = 12)))) +
   geom_text_repel(data = scz_05, 
-                  aes(x  =z_mean, 
+                  aes(x = z_mean, 
                       y = -log10(pvalue), 
                       label = gene_name),
-                  box.padding = .6, direction = "y") +
-  annotate("text", x = 3.5, y = 1.45, label = "Top 10%", 
+                  box.padding = .6, direction = "b", max.overlaps = 20) +
+  annotate("text", x = 3.5, y = yint + 0.1, label = "Top 10%", 
            hjust = -0.1, vjust = 0, color = "#440154FF", size = 5, fontface = "bold") +
   xlim(-8, 8) +
   xlab("Z score") +
   ylab(expression(-log[10](p[value]))) +
   ggtitle("SCZ TWAS Genes")
+
+ggsave(paste0(figures_path,"scz_twas.png"), width = 7, height = 6, device = "png", dpi = "retina")
 
