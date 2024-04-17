@@ -44,8 +44,10 @@ All the afterformentioned steps were repeated for all of the disorders investiga
 
 ![Enigma meta-analysis cohen's D and TPRS of TWAS genes at different thresholds](./figures/ADHD_brains.png)
 
-<img src="./figures/ADHD_10_cort_corr.png" alt="drawing" width="600"/>
-
+<figure>
+    <img src="./figures/ADHD_10_cort_corr.png" alt="drawing" width="600"/>
+    <figcaption> Correlation between cortical structural differences (Cohen's D) and TPRS obrained from top 10% of genes. Panel A) shows scatterplot with regression line between Cohens' D and TRPS value; while panel B) shows distribution of null correlations from spin permutations (N=1000). Dotted line represents the value of original correlation.</figcaption>
+</figure>
 
 ### ASD
 
