@@ -2,3 +2,5 @@ data/GWAS/
 data/models/
 **/.DS_Store
 code/__pycache__/
+.Rhistory
+data/Geneset/
