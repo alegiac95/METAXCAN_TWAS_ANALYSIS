@@ -169,7 +169,7 @@ bd_twas |>
   xlim(-6, 6) +
   xlab("Z score") +
   ylab(expression(-log[10](p[value]))) +
-  ggtitle("ASD TWAS Genes")
+  ggtitle("BD TWAS Genes")
 
 ggsave(paste0(figures_path,"bd_twas.png"), width = 7, height = 6, device = "png", dpi = "retina")
 
