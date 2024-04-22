@@ -67,7 +67,9 @@ for (disease in diseases){
   png(file=paste0(figures_path, disease, "_gtex_similarity.png"),
       width=8.5,height=8.5,units="in",res = 310)
   draw(p)
+  
   dev.off()
+  
   twas_path <- "/Users/alessiogiacomel/Dropbox/PhD/Analysis/transcriptomics_gio/MetaXcan_TWAS_Analysis/results/"
 
 }
