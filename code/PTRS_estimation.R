@@ -1,8 +1,8 @@
+# Setting up environment ===================================================
+# Clean environment
+rm(list = ls(all.names = TRUE)) # will clear all objects including hidden objects
+
 library(tidyverse)
-library(ggplot2)
-library(ggsankey)
-library(viridis)
-library(ggrepel)
 
 # Load the Gene data of the brain
 ahba_data <- readr::read_csv("/Users/alessiogiacomel/Library/CloudStorage/Dropbox/PhD/Analysis/transcriptomics_gio/MetaXcan_TWAS_Analysis/data/AHBA/AHBA_data_no_norm.csv") # data from the allen human brain atlas
@@ -23,11 +23,16 @@ ahba_data_clean <- ahba_data |>
   dplyr::select(dplyr::one_of(common_genes))
 ahba_data_clean$label <- ahba_data$label
 
-ahba_data_clean |>
-  dplyr::left_join(dk_labels, by = join_by(label == id), keep = FALSE) |>
-  dplyr::select(label.y, hemisphere, structure, everything())
 
 rm(brain_genes)
+
+t <- adhd_twas |>
+  dplyr::select(gene_name, z_mean, pvalue) |>
+  dplyr::mutate(upregulated = dplyr::if_else(z_mean > 0, "UP", "DOWN")) |>
+  dplyr::group_by(upregulated) |>
+  dplyr::arrange(pvalue) |>
+  dplyr::filter(row_number() <= n() * 0.1)
+
 
 # Filter the data to only include the common genes, i.e., that are in the AHBA and are also mostly expressed in the brain.
 
@@ -82,6 +87,18 @@ calculate_weighted_avg <- function(twas_df, gene_data_df) {
     summarise(weighted_avg = sum(expression * z_mean) / sum(z_mean))
 }
 
+calculate_weighted_avg_abs <- function(twas_df, gene_data_df) {
+  weighted_avg <- gene_data_df |>
+    tidyr::pivot_longer(cols = -label, 
+                        names_to = "gene_name", 
+                        values_to = "expression") |>
+    dplyr::left_join(twas_df, by = "gene_name") |>
+    dplyr::select(gene_name, label, expression, z_mean) |> 
+    tidyr::drop_na(z_mean) |>
+    group_by(label) |>
+    summarise(weighted_avg = sum(expression * abs(z_mean)) / sum(abs(z_mean)))
+}
+
 top_gene_frac <- function(df1, thr){
   df1 <- df1 |>
     dplyr::arrange(pvalue) |>
@@ -101,6 +118,12 @@ for (thr in thresholds) {
     dplyr::select(-label) |>
     dplyr::rename(label = label.y)
   readr::write_tsv(gw_adhd, paste0(twas_path,"ADHD/ADHD_TPRS_thr_",thr*100,".tsv"))
+  gw_adhd_abs <- calculate_weighted_avg_abs(top_adhd, ahba_data_clean)|>
+    dplyr::left_join(dk_labels, by = join_by(label == id), keep = FALSE) |>
+    dplyr::select(label.y, hemisphere, structure, everything()) |>
+    dplyr::select(-label) |>
+    dplyr::rename(label = label.y)
+  readr::write_tsv(gw_adhd_abs, paste0(twas_path,"ADHD/ADHD_TPRS_abs_thr_",thr*100,".tsv"))
   # ASD
   top_asd <- top_gene_frac(asd_twas, thr = thr)
   readr::write_tsv(top_asd, paste0(twas_path,"ASD/ASD_top_genes_thr_",thr*100,".tsv"))
@@ -110,6 +133,12 @@ for (thr in thresholds) {
     dplyr::select(-label) |>
     dplyr::rename(label = label.y)
   readr::write_tsv(gw_asd, paste0(twas_path,"ASD/ASD_TPRS_thr_",thr*100,".tsv"))
+  gw_asd_abs <- calculate_weighted_avg_abs(top_adhd, ahba_data_clean)|>
+    dplyr::left_join(dk_labels, by = join_by(label == id), keep = FALSE) |>
+    dplyr::select(label.y, hemisphere, structure, everything()) |>
+    dplyr::select(-label) |>
+    dplyr::rename(label = label.y)
+  readr::write_tsv(gw_asd_abs, paste0(twas_path,"ASD/ASD_TPRS_abs_thr_",thr*100,".tsv"))
   # AN
   top_an<- top_gene_frac(an_twas, thr = thr)
   readr::write_tsv(top_an, paste0(twas_path,"AN/AN_top_genes_thr_",thr*100,".tsv"))
@@ -119,6 +148,12 @@ for (thr in thresholds) {
     dplyr::select(-label) |>
     dplyr::rename(label = label.y)
   readr::write_tsv(gw_an, paste0(twas_path,"AN/AN_TPRS_thr_",thr*100,".tsv"))
+  gw_an_abs <- calculate_weighted_avg_abs(top_an, ahba_data_clean)|>
+    dplyr::left_join(dk_labels, by = join_by(label == id), keep = FALSE) |>
+    dplyr::select(label.y, hemisphere, structure, everything()) |>
+    dplyr::select(-label) |>
+    dplyr::rename(label = label.y)
+  readr::write_tsv(gw_an_abs, paste0(twas_path,"AN/AN_TPRS_abs_thr_",thr*100,".tsv"))
   # BD
   top_bd <- top_gene_frac(bd_twas, thr = thr)
   readr::write_tsv(top_bd, paste0(twas_path,"BD/BD_top_genes_thr_",thr*100,".tsv"))
@@ -128,6 +163,12 @@ for (thr in thresholds) {
     dplyr::select(-label) |>
     dplyr::rename(label = label.y)
   readr::write_tsv(gw_bd, paste0(twas_path,"BD/BD_TPRS_thr_",thr*100,".tsv"))
+  gw_bd_abs <- calculate_weighted_avg_abs(top_bd, ahba_data_clean)|>
+    dplyr::left_join(dk_labels, by = join_by(label == id), keep = FALSE) |>
+    dplyr::select(label.y, hemisphere, structure, everything()) |>
+    dplyr::select(-label) |>
+    dplyr::rename(label = label.y)
+  readr::write_tsv(gw_bd_abs, paste0(twas_path,"BD/BD_TPRS_abs_thr_",thr*100,".tsv"))
   # MDD
   top_mdd <- top_gene_frac(mdd_twas, thr = thr)
   readr::write_tsv(top_mdd, paste0(twas_path,"MDD/MDD_top_genes_thr_",thr*100,".tsv"))
@@ -137,6 +178,12 @@ for (thr in thresholds) {
     dplyr::select(-label) |>
     dplyr::rename(label = label.y)
   readr::write_tsv(gw_mdd, paste0(twas_path,"MDD/MDD_TPRS_thr_",thr*100,".tsv"))
+  gw_mdd_abs <- calculate_weighted_avg_abs(top_mdd, ahba_data_clean)|>
+    dplyr::left_join(dk_labels, by = join_by(label == id), keep = FALSE) |>
+    dplyr::select(label.y, hemisphere, structure, everything()) |>
+    dplyr::select(-label) |>
+    dplyr::rename(label = label.y)
+  readr::write_tsv(gw_mdd_abs, paste0(twas_path,"MDD/MDD_TPRS_abs_thr_",thr*100,".tsv"))
   # OCD
   top_ocd <- top_gene_frac(ocd_twas, thr = thr)
   readr::write_tsv(top_ocd, paste0(twas_path,"OCD/OCD_top_genes_thr_",thr*100,".tsv"))
@@ -146,6 +193,12 @@ for (thr in thresholds) {
     dplyr::select(-label) |>
     dplyr::rename(label = label.y)
   readr::write_tsv(gw_ocd, paste0(twas_path,"OCD/OCD_TPRS_thr_",thr*100,".tsv"))
+  gw_ocd_abs <- calculate_weighted_avg_abs(top_ocd, ahba_data_clean)|>
+    dplyr::left_join(dk_labels, by = join_by(label == id), keep = FALSE) |>
+    dplyr::select(label.y, hemisphere, structure, everything()) |>
+    dplyr::select(-label) |>
+    dplyr::rename(label = label.y)
+  readr::write_tsv(gw_ocd_abs, paste0(twas_path,"OCD/OCD_TPRS_abs_thr_",thr*100,".tsv"))
   # SCZ
   top_scz <- top_gene_frac(scz_twas, thr = thr)
   readr::write_tsv(top_scz, paste0(twas_path,"SCZ/SCZ_top_genes_thr_",thr*100,".tsv"))
@@ -155,6 +208,12 @@ for (thr in thresholds) {
     dplyr::select(-label) |>
     dplyr::rename(label = label.y)
   readr::write_tsv(gw_scz, paste0(twas_path,"SCZ/SCZ_TPRS_thr_",thr*100,".tsv"))
+  gw_scz_abs <- calculate_weighted_avg_abs(top_scz, ahba_data_clean)|>
+    dplyr::left_join(dk_labels, by = join_by(label == id), keep = FALSE) |>
+    dplyr::select(label.y, hemisphere, structure, everything()) |>
+    dplyr::select(-label) |>
+    dplyr::rename(label = label.y)
+  readr::write_tsv(gw_scz_abs, paste0(twas_path,"SCZ/SCZ_TPRS_abs_thr_",thr*100,".tsv"))
 }
 
 

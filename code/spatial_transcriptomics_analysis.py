@@ -9,9 +9,6 @@ with warnings.catch_warnings():
     warnings.filterwarnings("ignore")
     from netneurotools import freesurfer, stats
 
-import seaborn as sns
-import matplotlib.pyplot as plt
-from plot_correlations import plot_correlation_hist
 
 pd.options.mode.chained_assignment = None  # default='warn'
 
@@ -115,7 +112,7 @@ if __name__ == '__main__':
         
         for threshold in thresholds:
             
-            data_file = f"{disease}_TPRS_thr_{threshold}.tsv"
+            data_file = f"{disease}_TPRS_abs_thr_{threshold}.tsv"
             
             data_path = disease_path / data_file
             
@@ -136,7 +133,7 @@ if __name__ == '__main__':
             row_data = {'threshold': threshold,'corr': corr,'p': p}
             cortical_data_to_save = cortical_data_to_save.append(row_data, ignore_index=True)
             # save correlations for plot 
-            np.savetxt(disease_path / f"{disease}_cortical_corr_{threshold}.tsv", tmp, delimiter='\t')
+            np.savetxt(disease_path / f"{disease}_cortical_abs_corr_{threshold}.tsv", tmp, delimiter='\t')
             
             # Subcortical data
             subc_gene_data = gene_data[(gene_data['hemisphere'] == 'L') & (gene_data['structure'] == 'subcortex/brainstem')]
@@ -150,13 +147,13 @@ if __name__ == '__main__':
             row_data = {'threshold': threshold,'corr': corr,'p': p}
             subcortical_data_to_save = subcortical_data_to_save.append(row_data, ignore_index=True)
             # save correlations for plot
-            np.savetxt(disease_path / f"{disease}_subcortical_corr_{threshold}.tsv", tmp, delimiter='\t')
+            np.savetxt(disease_path / f"{disease}_subcortical_abs_corr_{threshold}.tsv", tmp, delimiter='\t')
             
         print(cortical_data_to_save)
         # Save the data to file
-        cortical_data_to_save.to_csv(disease_path / f"{disease}_cortical_correlations_results.tsv", sep='\t', index=False)
+        cortical_data_to_save.to_csv(disease_path / f"{disease}_cortical_abs_correlations_results.tsv", sep='\t', index=False)
         print(subcortical_data_to_save)
-        subcortical_data_to_save.to_csv(disease_path / f"{disease}_subcortical_correlations_results.tsv", sep='\t', index=False)
+        subcortical_data_to_save.to_csv(disease_path / f"{disease}_subcortical_abs_correlations_results.tsv", sep='\t', index=False)
             
             
             
