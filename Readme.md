@@ -38,6 +38,11 @@ All the afterformentioned steps were repeated for all of the disorders investiga
 ### ADHD
 
 <figure>
+    <img src="./figures/ADHD_gtex_similarity.png" alt="ADHD GTEx" />
+    <figcaption> Similarity matrix of the genes predicted with PrediXcan from different GTEx tissues.</figcaption>
+</figure>
+
+<figure>
     <img src="./figures/adhd_twas.png" alt="ADHD TWAS" />
     <figcaption> Volcano plot showing the genes derived from TWAS from the GWAS summary statistics and GTEx derived tissue prediction models. Colored points show the genes in the top 10% of genes subsequently used for TPRS calculations. Labelled data points show the top 0.5% of the genes emerging from TWAS analysis.</figcaption>
 </figure>
