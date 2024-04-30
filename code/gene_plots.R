@@ -240,7 +240,7 @@ ocd_twas |>
                       y = -log10(pvalue), 
                       label = gene_name),
                   box.padding = .6, direction = "b", max.overlaps = 20) +
-  annotate("text", x = 3.5, y = 1.45, label = "Top 10%", 
+  annotate("text", x = 3.5, y = yint + 0.1, label = "Top 10%", 
            hjust = -0.1, vjust = 0, color = "#440154FF", size = 5, fontface = "bold") +
   xlim(-6, 6) +
   xlab("Z score") +

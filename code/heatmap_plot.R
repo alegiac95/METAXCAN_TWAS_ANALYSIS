@@ -1,3 +1,7 @@
+# Setting up environment ===================================================
+# Clean environment
+rm(list = ls(all.names = TRUE)) # will clear all objects including hidden objects
+
 library(tidyverse)
 library(ggplot2)
 library(viridis)
@@ -11,33 +15,33 @@ data_path <- "/Users/alessiogiacomel/Dropbox/PhD/Analysis/transcriptomics_gio/Me
 
 figures_path <- "/Users/alessiogiacomel/Dropbox/PhD/Analysis/transcriptomics_gio/MetaXcan_TWAS_Analysis/figures/"
 
-adhd_corr_cort <- readr::read_tsv(paste0(twas_path,"ADHD/ADHD_cortical_abs_correlations_results.tsv")) |>
+adhd_corr_cort <- readr::read_tsv(paste0(twas_path,"ADHD/ADHD_cortical_correlations_results.tsv")) |>
   mutate(disease = "ADHD")
-adhd_corr_subcort <- readr::read_tsv(paste0(twas_path,"ADHD/ADHD_subcortical_abs_correlations_results.tsv"))|>
+adhd_corr_subcort <- readr::read_tsv(paste0(twas_path,"ADHD/ADHD_subcortical_correlations_results.tsv"))|>
   mutate(disease = "ADHD")
-asd_corr_cort <- readr::read_tsv(paste0(twas_path,"ASD/ASD_cortical_abs_correlations_results.tsv"))|>
+asd_corr_cort <- readr::read_tsv(paste0(twas_path,"ASD/ASD_cortical_correlations_results.tsv"))|>
   mutate(disease = "ASD")
-asd_corr_subcort <- readr::read_tsv(paste0(twas_path,"ASD/ASD_subcortical_abs_correlations_results.tsv"))|>
+asd_corr_subcort <- readr::read_tsv(paste0(twas_path,"ASD/ASD_subcortical_correlations_results.tsv"))|>
   mutate(disease = "ASD")
-an_corr_cort <- readr::read_tsv(paste0(twas_path,"AN/AN_cortical_abs_correlations_results.tsv"))|>
+an_corr_cort <- readr::read_tsv(paste0(twas_path,"AN/AN_cortical_correlations_results.tsv"))|>
   mutate(disease = "AN")
-an_corr_subcort <- readr::read_tsv(paste0(twas_path,"AN/AN_subcortical_abs_correlations_results.tsv"))|>
+an_corr_subcort <- readr::read_tsv(paste0(twas_path,"AN/AN_subcortical_correlations_results.tsv"))|>
   mutate(disease = "AN")
-bd_corr_cort <- readr::read_tsv(paste0(twas_path,"BD/BD_cortical_abs_correlations_results.tsv"))|>
+bd_corr_cort <- readr::read_tsv(paste0(twas_path,"BD/BD_cortical_correlations_results.tsv"))|>
   mutate(disease = "BD")
-bd_corr_subcort <- readr::read_tsv(paste0(twas_path,"BD/BD_subcortical_abs_correlations_results.tsv"))|>
+bd_corr_subcort <- readr::read_tsv(paste0(twas_path,"BD/BD_subcortical_correlations_results.tsv"))|>
   mutate(disease = "BD")
-mdd_corr_cort <- readr::read_tsv(paste0(twas_path,"MDD/MDD_cortical_abs_correlations_results.tsv"))|>
+mdd_corr_cort <- readr::read_tsv(paste0(twas_path,"MDD/MDD_cortical_correlations_results.tsv"))|>
   mutate(disease = "MDD")
-mdd_corr_subcort <- readr::read_tsv(paste0(twas_path,"MDD/MDD_subcortical_abs_correlations_results.tsv"))|>
+mdd_corr_subcort <- readr::read_tsv(paste0(twas_path,"MDD/MDD_subcortical_correlations_results.tsv"))|>
   mutate(disease = "MDD")
-ocd_corr_cort <- readr::read_tsv(paste0(twas_path,"OCD/OCD_cortical_abs_correlations_results.tsv"))|>
+ocd_corr_cort <- readr::read_tsv(paste0(twas_path,"OCD/OCD_cortical_correlations_results.tsv"))|>
   mutate(disease = "OCD")
-ocd_corr_subcort <- readr::read_tsv(paste0(twas_path,"OCD/OCD_subcortical_abs_correlations_results.tsv"))|>
+ocd_corr_subcort <- readr::read_tsv(paste0(twas_path,"OCD/OCD_subcortical_correlations_results.tsv"))|>
   mutate(disease = "OCD")
-scz_corr_cort <- readr::read_tsv(paste0(twas_path,"SCZ/SCZ_cortical_abs_correlations_results.tsv"))|>
+scz_corr_cort <- readr::read_tsv(paste0(twas_path,"SCZ/SCZ_cortical_correlations_results.tsv"))|>
   mutate(disease = "SCZ")
-scz_corr_subcort <- readr::read_tsv(paste0(twas_path,"SCZ/SCZ_subcortical_abs_correlations_results.tsv"))|>
+scz_corr_subcort <- readr::read_tsv(paste0(twas_path,"SCZ/SCZ_subcortical_correlations_results.tsv"))|>
   mutate(disease = "SCZ")
 
 cortical_df <- dplyr::bind_rows(adhd_corr_cort, 
@@ -72,7 +76,7 @@ cort_annotation_matrix <- as.matrix(cortical_df |>
 
 cort_heat <- ComplexHeatmap::Heatmap(cort_mat,
                         name = "Corr",
-                        row_title = "Threshold",
+                        row_title = "Cortical Regions",
                         column_title = "Brain Disorder",
                         cluster_rows = FALSE,
                         cluster_columns = FALSE,
@@ -84,7 +88,7 @@ cort_heat <- ComplexHeatmap::Heatmap(cort_mat,
                         column_title_gp = gpar(fontsize = 15, fontface = "bold"),
                         row_title_gp = gpar(fontsize = 15, fontface = "bold"),
                         cell_fun = function(j, i, x, y, width, height, fill) {
-                          if(cort_annotation_matrix[i, j] < 0.05)
+                          if(cort_annotation_matrix[i, j] <= 0.05)
                             grid.text(sprintf("*"), x, y, gp = gpar(fontsize = 15, fontface = "bold"))
                         })
 cort_heat 
@@ -101,7 +105,7 @@ sub_annotation_matrix <- as.matrix(subcortical_df %>%
 
 subcort_heat <- ComplexHeatmap::Heatmap(as.matrix(subcort_mat),
                                      name = "Corr",
-                                     row_title = "Threshold",
+                                     row_title = "Subcortical Regions",
                                      column_title = "Brain Disorder",
                                      cluster_rows = FALSE,
                                      cluster_columns = FALSE,
@@ -113,13 +117,13 @@ subcort_heat <- ComplexHeatmap::Heatmap(as.matrix(subcort_mat),
                                      column_title_gp = gpar(fontsize = 15, fontface = "bold"),
                                      row_title_gp = gpar(fontsize = 15, fontface = "bold"),
                                      cell_fun = function(j, i, x, y, width, height, fill) {
-                                       if(sub_annotation_matrix[i, j] < 0.05)
+                                       if(sub_annotation_matrix[i, j] <= 0.05)
                                          grid.text(sprintf("*"), x, y, gp = gpar(fontsize = 15, fontface = "bold"))
                                      })
 subcort_heat 
 
 heat_list <- cort_heat %v% subcort_heat
-png(paste0(figures_path,"Correlations_abs.png"),width=14.5,height=16,units="cm",res=300)
+png(paste0(figures_path,"Correlations.png"),width=14.5,height=16,units="cm",res=300)
 heat_list
 dev.off()
 
