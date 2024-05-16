@@ -9,6 +9,8 @@ results/.DS_Store
 data/DK-files/labels/
 data/DK-files/masks/
 data/DK-files/snapshots/
+data/DK-files/interrim/
 data/DK-files/contours_reduced.rda
 data/DK-files/contours_smoothed.rda
 data/DK-files/contours.rda
+presentations/
