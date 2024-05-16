@@ -6,3 +6,9 @@ code/__pycache__/
 data/Geneset/
 code/gene_overlap.R
 results/.DS_Store
+data/DK-files/labels/
+data/DK-files/masks/
+data/DK-files/snapshots/
+data/DK-files/contours_reduced.rda
+data/DK-files/contours_smoothed.rda
+data/DK-files/contours.rda
