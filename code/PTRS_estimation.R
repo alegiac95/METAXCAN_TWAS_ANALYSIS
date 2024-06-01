@@ -64,7 +64,7 @@ scz_twas <- readr::read_tsv(paste0(twas_path,"SCZ/PGC_SCZ_SMetaXcan_en.tsv")) |>
 # using a weighte average approach, where the weights is given by the Z-score of 
 # the top percent of genes for each disease, while the score is from the AHBA.
 
-thresholds <- c(0.1, 0.05, 0.01, 0.005, 0.001) # thresholds to be used for the 
+thresholds <- c(0.1, 0.05, 0.01) # thresholds to be used for the 
 # analysis. This are the top 10, 5, 1, 0.5 and 0.1 percent of genes.
 
 # Calculate weighted average
