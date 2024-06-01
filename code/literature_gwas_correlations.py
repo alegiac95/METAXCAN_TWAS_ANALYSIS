@@ -95,7 +95,7 @@ if __name__ == '__main__':
     if not base_path.exists():
         raise NotADirectoryError("Data path does not exist")
     
-    diseases = ["ADHD", "AN", "ASD", "BD", "MDD", "OCD", "SCZ"]
+    diseases = ["ASD", "BD", "MDD", "SCZ"]
     thresholds = [10, 5, 1]
     
     for disease in diseases:
